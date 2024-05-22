@@ -21,15 +21,23 @@ async function postPredictHandler(request, h) {
 
 		await storeData(id, data);
 
-		const response = h.response({
-			status: "success",
-			message: !isBadRequest
-				? "Model is predicted successfully"
-				: "Model is predicted successfully but under threshold. Please use the correct picture",
-			data,
-		});
-		response.code(201);
-		return response;
+		if (!isBadRequest) {
+			const response = h.response({
+				status: "success",
+				message: "Model is predicted successfully",
+				data: data,
+			});
+			response.code(201);
+			return response;
+		} else {
+			const response = h.response({
+				status: "fail",
+				message: "Terjadi kesalahan dalam melakukan prediksi",
+			});
+			response.code(400);
+			return response;
+		}
+
 	} catch (error) {
 		return h.response({ status: "fail", message: error.message }).code(400);
 	}

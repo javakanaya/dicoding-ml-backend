@@ -1,4 +1,5 @@
 const tf = require("@tensorflow/tfjs-node");
+const { NIL } = require("uuid");
 
 async function predictBinaryClassification(model, image) {
 	try {
@@ -24,8 +25,8 @@ async function predictBinaryClassification(model, image) {
 			label = "Non-cancer";
 			isBadRequest = false;
 		} else {
-			label = finalScore > 50 ? "Cancer" : "Non-cancer";
 			isBadRequest = true;
+			label = null;
 		}
 
 		// Provide explanation and suggestion based on the predicted class
