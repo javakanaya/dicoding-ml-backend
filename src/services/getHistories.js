@@ -4,7 +4,7 @@ async function getHistories() {
 	const db = new Firestore({
 		projectId: process.env.PROJECT_ID,
 	});
-	const predictCollection = db.collection("prediction");
+	const predictCollection = db.collection("predictions");
 	const snapshot = await predictCollection.get();
 
 	const histories = [];
